@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>TechGeo | Deep Data Flow Architecture (L0 → L4) with AI Core</title>
+    <title>TechGeo | MASTER DATA FLOW DIAGRAM - All Entities, Processes, Stores & User Requests</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -14,10 +14,10 @@
         }
 
         body {
-            background: #03060f;
-            font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
-            padding: 2rem 1rem;
-            color: #eef5ff;
+            background: #01050f;
+            font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, sans-serif;
+            padding: 1.5rem;
+            color: #edf2ff;
         }
 
         .container {
@@ -25,110 +25,87 @@
             margin: 0 auto;
         }
 
-        /* header section */
-        .title-section {
+        /* header */
+        .master-header {
             text-align: center;
-            margin-bottom: 2rem;
-            position: relative;
+            margin-bottom: 1.8rem;
         }
-        .title-section h1 {
-            font-size: 2.4rem;
+        .master-header h1 {
+            font-size: 2rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, #60a5fa, #a78bfa);
+            background: linear-gradient(135deg, #ffffff, #60a5fa, #f472b6);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.5px;
         }
-        .title-section p {
-            color: #7c8db0;
+        .master-header p {
+            color: #8ba0c0;
             font-family: monospace;
+            font-size: 0.85rem;
             margin-top: 0.5rem;
-            border-top: 1px solid #1e2a4a;
-            display: inline-block;
-            padding-top: 0.5rem;
         }
 
-        /* level tabs */
-        .level-tabs {
+        /* controls */
+        .view-controls {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 0.8rem;
-            margin-bottom: 2rem;
+            gap: 0.7rem;
+            margin-bottom: 1.5rem;
         }
-        .level-btn {
-            background: #0f1425;
-            border: 1px solid #2d3a5e;
-            padding: 0.6rem 1.4rem;
+        .ctrl-btn {
+            background: #0f1428;
+            border: 1px solid #2d3e6e;
+            padding: 0.5rem 1.2rem;
             border-radius: 40px;
+            font-size: 0.8rem;
             font-weight: 600;
-            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s;
-            color: #b9c7e0;
-            backdrop-filter: blur(4px);
+            color: #bfd6ff;
         }
-        .level-btn i {
-            margin-right: 6px;
-        }
-        .level-btn.active {
+        .ctrl-btn i { margin-right: 6px; }
+        .ctrl-btn.active {
             background: #2563eb;
-            border-color: #60a5fa;
+            border-color: #7aa9ff;
             color: white;
-            box-shadow: 0 0 12px rgba(37,99,235,0.4);
+            box-shadow: 0 0 12px #2563eb60;
         }
-        .level-btn:hover:not(.active) {
-            background: #1e293b;
-            border-color: #5b8ef9;
+        .ctrl-btn:hover:not(.active) {
+            background: #1e2a4a;
         }
 
-        /* diagram wrapper */
-        .diagram-wrapper {
-            background: #050a15;
-            border-radius: 2rem;
-            border: 1px solid #19233f;
-            padding: 1rem;
+        /* svg wrapper (big canvas) */
+        .diagram-canvas {
+            background: #030712;
+            border-radius: 1.8rem;
+            border: 1px solid #1f2a4e;
+            padding: 0.8rem;
             overflow-x: auto;
-            box-shadow: 0 20px 35px -12px black;
-        }
-        .svg-container {
-            min-width: 1300px;
-            width: 100%;
+            box-shadow: 0 20px 35px -10px black;
         }
         svg {
+            min-width: 1450px;
             width: 100%;
             height: auto;
-            background: #030811;
+            background: #01050f;
             border-radius: 1.2rem;
             display: block;
             font-family: 'Inter', 'Segoe UI', monospace;
         }
 
-        /* animation keyframes for data packets */
-        @keyframes flowData {
-            0% { stroke-dashoffset: 12; opacity: 0.6; }
-            100% { stroke-dashoffset: 0; opacity: 1; }
-        }
-        @keyframes pulseGlow {
-            0% { filter: drop-shadow(0 0 0px rgba(96,165,250,0)); }
-            100% { filter: drop-shadow(0 0 6px rgba(96,165,250,0.7)); }
-        }
-        .animated-flow {
-            animation: flowData 0.5s linear infinite;
-        }
-
+        /* legend */
         .legend-panel {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 1.5rem;
-            margin-top: 1.8rem;
-            background: #0b1120cc;
+            gap: 1.8rem;
+            margin-top: 1.5rem;
+            background: #0b1120aa;
             backdrop-filter: blur(8px);
             border-radius: 2rem;
-            padding: 0.7rem 1.8rem;
-            border: 1px solid #25345c;
+            padding: 0.6rem 1.5rem;
+            border: 1px solid #29355f;
         }
         .legend-item {
             display: flex;
@@ -136,336 +113,343 @@
             gap: 8px;
             font-size: 0.75rem;
         }
-        .badge-lvl {
-            background: #0f172f;
-            padding: 0.2rem 0.7rem;
-            border-radius: 20px;
+        .badge {
+            background: #101a30;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
             font-family: monospace;
             font-size: 0.7rem;
         }
 
-        @media (max-width: 780px) {
-            .level-btn { padding: 0.4rem 1rem; font-size: 0.7rem; }
+        @keyframes flowDash {
+            0% { stroke-dashoffset: 16; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .animated-flow {
+            animation: flowDash 0.55s linear infinite;
+        }
+
+        @media (max-width: 850px) {
+            body { padding: 0.8rem; }
+            .ctrl-btn { padding: 0.3rem 0.8rem; font-size: 0.7rem; }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="title-section">
-        <h1><i class="fas fa-share-alt"></i> TechGeo · Sovereign Data Flow (Level 0 → 4)</h1>
-        <p>Traceback · Conditional Settlement · Hierarchical AI · Shadow Student Evolution</p>
+    <div class="master-header">
+        <h1><i class="fas fa-project-diagram"></i> TechGeo · COMPLETE DATA FLOW (ONE CHART)</h1>
+        <p>External Entities | Core Processes | Data Stores | File Transfers | Detailed User Requests (Login · Register · Two-Point · Escrow · AI · Settlement)</p>
     </div>
 
-    <div class="level-tabs">
-        <button class="level-btn active" data-level="L0"><i class="fas fa-globe"></i> Level 0 – Context</button>
-        <button class="level-btn" data-level="L1"><i class="fas fa-id-card"></i> Level 1 – Login/Register</button>
-        <button class="level-btn" data-level="L2"><i class="fas fa-exchange-alt"></i> Level 2 – Core Ledger & Escrow</button>
-        <button class="level-btn" data-level="L3"><i class="fas fa-brain"></i> Level 3 – AI Talks (Shadow Student)</button>
-        <button class="level-btn" data-level="L4"><i class="fas fa-microchip"></i> Level 4 – Autonomous Evolution</button>
+    <div class="view-controls">
+        <button class="ctrl-btn active" data-view="full"><i class="fas fa-eye"></i> Full Master DFD (All Layers)</button>
+        <button class="ctrl-btn" data-view="requests"><i class="fas fa-user-check"></i> Focus: User Requests + Flows</button>
+        <button class="ctrl-btn" data-view="storage"><i class="fas fa-database"></i> Focus: Data Stores & File Transfers</button>
     </div>
 
-    <div class="diagram-wrapper">
-        <div class="svg-container" id="svgRoot">
-            <!-- SVG will be injected dynamically based on level selection (full detail in each) -->
-        </div>
+    <div class="diagram-canvas" id="svgContainer">
+        <!-- SVG injected dynamically -->
     </div>
+
     <div class="legend-panel">
-        <div class="legend-item"><i class="fas fa-circle" style="color:#3b82f6; font-size:10px;"></i> <span>External Actor</span><span class="badge-lvl">User/Admin</span></div>
-        <div class="legend-item"><i class="fas fa-cogs" style="color:#f59e0b;"></i> <span>Process Node</span></div>
-        <div class="legend-item"><i class="fas fa-database" style="color:#34d399;"></i> <span>Data Store</span></div>
-        <div class="legend-item"><i class="fas fa-robot" style="color:#c084fc;"></i> <span>TechGeoAI Core</span></div>
-        <div class="legend-item"><i class="fas fa-arrow-right" style="color:#60a5fa;"></i> <span>Data / Control Flow (animated)</span></div>
-        <div class="legend-item"><i class="fas fa-fingerprint" style="color:#f97316;"></i> <span>Biometric / Conditional Gate</span></div>
+        <div class="legend-item"><i class="fas fa-user-circle" style="color:#60a5fa;"></i> <span>External Entity</span><span class="badge">Worker/CEO/Bank</span></div>
+        <div class="legend-item"><i class="fas fa-microchip" style="color:#f59e0b;"></i> <span>Process / Engine</span></div>
+        <div class="legend-item"><i class="fas fa-database" style="color:#34d399;"></i> <span>Data Store (PostgreSQL/MongoDB)</span></div>
+        <div class="legend-item"><i class="fas fa-robot" style="color:#c084fc;"></i> <span>TechGeoAI (Shadow)</span></div>
+        <div class="legend-item"><i class="fas fa-file-alt" style="color:#f97316;"></i> <span>File Transfer / Gold Logs</span></div>
+        <div class="legend-item"><i class="fas fa-arrow-right" style="color:#7aa9ff;"></i> <span>Data / Request Flow (animated)</span></div>
     </div>
 </div>
 
 <script>
-    // ======================== SVG BUILDER FOR EACH LEVEL (L0, L1, L2, L3, L4) ========================
-    // all diagrams are extremely detailed, no overlapping, max dimensions & animation
-
-    function buildLevel0() {
-        // Context Diagram (Level 0): external entities + core system boundary
-        return `<svg viewBox="0 0 1400 750" xmlns="http://www.w3.org/2000/svg">
+    // ------------------------------------------------------------------
+    // ONE MASSIVE DETAILED DFD: all external entities, processes, stores, file transfers, user requests
+    // includes: login, register, two-point mapping, escrow, biometric, AI shadow, gold logs, hierarchical RBAC, etc.
+    // ------------------------------------------------------------------
+    function buildFullMasterDFD() {
+        return `<svg viewBox="0 0 1600 1080" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                <linearGradient id="bgGrad0" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#030811"/><stop offset="100%" stop-color="#0a1022"/></linearGradient>
-                <marker id="arr0" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#60a5fa"/></marker>
-                <marker id="arrBio" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f97316"/></marker>
-                <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                <linearGradient id="bgMaster" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#020617"/><stop offset="100%" stop-color="#070e1a"/></linearGradient>
+                <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#3b82f6"/></marker>
+                <marker id="arrowGold" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#fbbf24"/></marker>
+                <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#34d399"/></marker>
+                <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#c084fc"/></marker>
+                <filter id="glowDrop"><feDropShadow dx="2" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/></filter>
             </defs>
-            <rect width="1400" height="750" fill="url(#bgGrad0)" rx="30" stroke="#1e2a4a" stroke-width="1.5"/>
-            <text x="700" y="45" text-anchor="middle" fill="#a0b4e0" font-size="16" font-weight="bold" letter-spacing="1">📡 LEVEL 0 – CONTEXT DIAGRAM (SYSTEM BOUNDARY)</text>
+            <rect width="1600" height="1080" fill="url(#bgMaster)" rx="32" stroke="#25345c" stroke-width="2"/>
+            <text x="800" y="45" text-anchor="middle" fill="#e2e8ff" font-size="20" font-weight="800" letter-spacing="1">🔷 TECHGEO — GLOBAL UNIFIED DATA FLOW (EXTERNAL ENTITIES · PROCESSES · STORES · REQUESTS) 🔷</text>
             
-            <!-- External Entities -->
-            <g transform="translate(60, 220)">
-                <rect width="190" height="85" rx="18" fill="#111827" stroke="#3b82f6" stroke-width="2"/>
-                <text x="95" y="30" text-anchor="middle" fill="#f1f5f9" font-weight="bold"><tspan>👤 Worker / User</tspan></text>
-                <text x="95" y="50" text-anchor="middle" fill="#9ca3af" font-size="11">Primary Phone (Bio+GPS)</text>
-                <text x="95" y="68" text-anchor="middle" fill="#6b7280" font-size="10">1:1 Device Binding</text>
+            <!-- =============== EXTERNAL ENTITIES (LEFT & RIGHT) =============== -->
+            <!-- 1. Worker (Primary Phone) -->
+            <g transform="translate(30, 160)" filter="url(#glowDrop)">
+                <rect width="200" height="100" rx="18" fill="#0f172a" stroke="#3b82f6" stroke-width="2.5"/>
+                <text x="100" y="32" text-anchor="middle" fill="#f1f5f9" font-weight="bold" font-size="14"><tspan>📱 Worker</tspan></text>
+                <text x="100" y="52" text-anchor="middle" fill="#93c5fd" font-size="11">Primary Phone (Bio+GPS)</text>
+                <text x="100" y="70" text-anchor="middle" fill="#6b8cff" font-size="10">1 Phone : 1 National ID</text>
+                <text x="100" y="86" text-anchor="middle" fill="#475569" font-size="9">Device fingerprint</text>
             </g>
-            <g transform="translate(60, 440)">
-                <rect width="190" height="85" rx="18" fill="#111827" stroke="#f97316" stroke-width="2"/>
-                <text x="95" y="30" text-anchor="middle" fill="#f1f5f9" font-weight="bold"><tspan>💼 CEO / Supervisor</tspan></text>
-                <text x="95" y="50" text-anchor="middle" fill="#9ca3af" font-size="11">Dashboard / Hierarchy</text>
-                <text x="95" y="68" text-anchor="middle" fill="#f97316" font-size="10">QR Mirror Access</text>
+            <!-- 2. CEO / Admin (Laptop) -->
+            <g transform="translate(30, 380)" filter="url(#glowDrop)">
+                <rect width="200" height="100" rx="18" fill="#0f172a" stroke="#f97316" stroke-width="2.5"/>
+                <text x="100" y="32" text-anchor="middle" fill="#f1f5f9" font-weight="bold" font-size="14"><tspan>💻 CEO / Admin</tspan></text>
+                <text x="100" y="52" text-anchor="middle" fill="#fdba74" font-size="11">Laptop (QR Mirror)</text>
+                <text x="100" y="70" text-anchor="middle" fill="#fb923c" font-size="10">View-only + Account Creation</text>
+                <text x="100" y="86" text-anchor="middle" fill="#9ca3af" font-size="9">No transaction rights</text>
             </g>
-            <g transform="translate(1150, 330)">
-                <rect width="180" height="80" rx="18" fill="#111827" stroke="#facc15" stroke-width="2" stroke-dasharray="5 3"/>
-                <text x="90" y="30" text-anchor="middle" fill="#fde047" font-weight="bold"><tspan>🏦 M-Pesa / Bank</tspan></text>
-                <text x="90" y="50" text-anchor="middle" fill="#cbd5e1" font-size="11">On/Off Ramp</text>
+            <!-- 3. Supervisor -->
+            <g transform="translate(30, 600)" filter="url(#glowDrop)">
+                <rect width="200" height="90" rx="18" fill="#0f172a" stroke="#10b981" stroke-width="2.5"/>
+                <text x="100" y="32" text-anchor="middle" fill="#f1f5f9" font-weight="bold" font-size="14"><tspan>📊 Supervisor</tspan></text>
+                <text x="100" y="52" text-anchor="middle" fill="#6ee7b7" font-size="11">Live Map Monitor</text>
+                <text x="100" y="70" text-anchor="middle" fill="#34d399" font-size="10">Check-In / GPS Alerts</text>
+            </g>
+            <!-- 4. External Bank (M-Pesa) -->
+            <g transform="translate(1360, 480)" filter="url(#glowDrop)">
+                <rect width="200" height="90" rx="18" fill="#0f172a" stroke="#facc15" stroke-width="2.5" stroke-dasharray="6 3"/>
+                <text x="100" y="32" text-anchor="middle" fill="#fef08a" font-weight="bold" font-size="14"><tspan>🏦 M-Pesa/Bank</tspan></text>
+                <text x="100" y="52" text-anchor="middle" fill="#fde047" font-size="11">External On/Off Ramp</text>
+                <text x="100" y="70" text-anchor="middle" fill="#ca8a04" font-size="10">API Gateway</text>
             </g>
             
-            <!-- TechGeo System (central) -->
-            <g transform="translate(450, 280)">
-                <rect width="500" height="220" rx="32" fill="#0f172fe0" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="8 4"/>
-                <text x="250" y="40" text-anchor="middle" fill="#bae6fd" font-size="18" font-weight="bold">⚙️ TechGeo Unified Ecosystem</text>
-                <text x="250" y="70" text-anchor="middle" fill="#7aa2f7" font-size="12">• Identity Traceback & Ledger  • Two-Point Protocol  • Conditional Escrow</text>
-                <text x="250" y="95" text-anchor="middle" fill="#7aa2f7" font-size="12">• RBAC Hierarchical Governance • Biometric Settlement • Shadow AI Evolution</text>
-                <line x1="80" y1="120" x2="420" y2="120" stroke="#2d3a6e" stroke-width="1"/>
-                <text x="250" y="155" text-anchor="middle" fill="#c4b5fd" font-size="12"><tspan>🧠 Internal AI (TechGeoAI) – Gold Logs training</tspan></text>
-                <text x="250" y="185" text-anchor="middle" fill="#94a3b8" font-size="11">PostgreSQL (Ledger) + MongoDB (Intent/Logs)</text>
+            <!-- =============== DATA STORES =============== -->
+            <g transform="translate(620, 860)" filter="url(#glowDrop)">
+                <rect width="270" height="100" rx="20" fill="#0f172f" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="5 3"/>
+                <text x="135" y="30" text-anchor="middle" fill="#bae6fd" font-weight="bold">🗄️ PostgreSQL (Primary Store)</text>
+                <text x="135" y="52" text-anchor="middle" fill="#9ca3af" font-size="11">• Internal Ledger (Balances/Escrow)</text>
+                <text x="135" y="68" text-anchor="middle" fill="#9ca3af" font-size="11">• Traceback Table (ID+Device)</text>
+                <text x="135" y="84" text-anchor="middle" fill="#6b7280" font-size="10">• RBAC Roles & Settlement atomic</text>
+            </g>
+            <g transform="translate(960, 860)" filter="url(#glowDrop)">
+                <rect width="280" height="100" rx="20" fill="#0f172f" stroke="#2dd4bf" stroke-width="2.5" stroke-dasharray="5 3"/>
+                <text x="140" y="30" text-anchor="middle" fill="#ccfbf1" font-weight="bold">📦 MongoDB (Activity Store)</text>
+                <text x="140" y="52" text-anchor="middle" fill="#9ca3af" font-size="11">• Gold Logs (User Intent/Context)</text>
+                <text x="140" y="68" text-anchor="middle" fill="#9ca3af" font-size="11">• Activity Noter logs</text>
+                <text x="140" y="84" text-anchor="middle" fill="#2dd4bf" font-size="10">• Shadow Student training data</text>
             </g>
             
-            <!-- flows -->
-            <path d="M250,260 L400,340" stroke="#60a5fa" stroke-width="2.5" marker-end="url(#arr0)" fill="none" stroke-dasharray="6 3" class="animated-flow"/>
-            <text x="300" y="295" fill="#60a5fa" font-size="10">GPS/ID/Biometric</text>
-            <path d="M250,480 L420,440" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrBio)" fill="none"/>
-            <text x="310" y="465" fill="#f97316" font-size="10">Admin actions / Monitor</text>
-            <path d="M950,380 L1150,360" stroke="#facc15" stroke-width="2.5" marker-end="url(#arr0)" fill="none"/>
-            <text x="1020" y="355" fill="#facc15" font-size="10">Deposit/Withdraw</text>
-            <path d="M700,500 L700,570 L350,570 L250,530" stroke="#34d399" stroke-width="2" marker-end="url(#arr0)" fill="none" stroke-dasharray="5 2"/>
-            <text x="480" y="590" fill="#34d399" font-size="10">Settlement atomic</text>
+            <!-- =============== CORE PROCESSES (MIDDLE) =============== -->
+            <!-- Process 1: Identity & Traceback -->
+            <g transform="translate(340, 120)" filter="url(#glowDrop)">
+                <rect width="240" height="85" rx="16" fill="#1e3a8a" stroke="#60a5fa" stroke-width="2"/>
+                <text x="120" y="30" text-anchor="middle" fill="white" font-weight="bold">🔐 Identity & Traceback</text>
+                <text x="120" y="50" text-anchor="middle" fill="#bfdbfe" font-size="11">National ID + Device Fingerprint</text>
+                <text x="120" y="68" text-anchor="middle" fill="#93c5fd" font-size="10">Mock-GPS detection</text>
+            </g>
+            <!-- Process 2: RBAC Hierarchy -->
+            <g transform="translate(680, 120)" filter="url(#glowDrop)">
+                <rect width="250" height="85" rx="16" fill="#0f766e" stroke="#2dd4bf" stroke-width="2"/>
+                <text x="125" y="30" text-anchor="middle" fill="white" font-weight="bold">👑 RBAC Governance</text>
+                <text x="125" y="50" text-anchor="middle" fill="#ccfbf1" font-size="11">CEO → Admin → Supervisor → Worker</text>
+                <text x="125" y="68" text-anchor="middle" fill="#5eead4" font-size="10">Account creation & permissions</text>
+            </g>
+            <!-- Process 3: Two-Point Protocol -->
+            <g transform="translate(340, 280)" filter="url(#glowDrop)">
+                <rect width="240" height="85" rx="16" fill="#1e3a8a" stroke="#facc15" stroke-width="2"/>
+                <text x="120" y="30" text-anchor="middle" fill="white" font-weight="bold">📍 Two-Point Mapper</text>
+                <text x="120" y="50" text-anchor="middle" fill="#fef08a" font-size="11">A (Work) → B (Accommodation)</text>
+                <text x="120" y="68" text-anchor="middle" fill="#fde047" font-size="10">Real-time GPS + Traffic</text>
+            </g>
+            <!-- Process 4: Conditional Escrow -->
+            <g transform="translate(680, 280)" filter="url(#glowDrop)">
+                <rect width="250" height="85" rx="16" fill="#c2410c" stroke="#f97316" stroke-width="2"/>
+                <text x="125" y="30" text-anchor="middle" fill="white" font-weight="bold">💰 Conditional Escrow</text>
+                <text x="125" y="50" text-anchor="middle" fill="#fed7aa" font-size="11">Hold funds: Reserved state</text>
+                <text x="125" y="68" text-anchor="middle" fill="#ffedcc" font-size="10">Release on [Arrival+Biometric]</text>
+            </g>
+            <!-- Process 5: Live Check-In / Auto-Arrival -->
+            <g transform="translate(340, 440)" filter="url(#glowDrop)">
+                <rect width="240" height="85" rx="16" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+                <text x="120" y="30" text-anchor="middle" fill="white" font-weight="bold">🛰️ Auto Check-In Engine</text>
+                <text x="120" y="50" text-anchor="middle" fill="#e0f2fe" font-size="11">GPS + Workplace IP Match</text>
+                <text x="120" y="68" text-anchor="middle" fill="#bae6fd" font-size="10">Triggers "Arrived" status</text>
+            </g>
+            <!-- Process 6: Biometric Handshake -->
+            <g transform="translate(680, 440)" filter="url(#glowDrop)">
+                <rect width="250" height="85" rx="16" fill="#a21caf" stroke="#e879f9" stroke-width="2"/>
+                <text x="125" y="30" text-anchor="middle" fill="white" font-weight="bold">🖐️ Biometric Handshake</text>
+                <text x="125" y="50" text-anchor="middle" fill="#f3e8ff" font-size="11">Fingerprint / Face SDK</text>
+                <text x="125" y="68" text-anchor="middle" fill="#e9d5ff" font-size="10">Final payment trigger</text>
+            </g>
+            <!-- Process 7: TechGeoAI Shadow -->
+            <g transform="translate(1020, 260)" filter="url(#glowDrop)">
+                <rect width="280" height="100" rx="22" fill="#4c1d95" stroke="#c084fc" stroke-width="2.5"/>
+                <text x="140" y="30" text-anchor="middle" fill="white" font-weight="bold">🧠 TechGeoAI (Shadow Student)</text>
+                <text x="140" y="52" text-anchor="middle" fill="#ddd6fe" font-size="11">LoRA fine-tuning (RTX 5090)</text>
+                <text x="140" y="70" text-anchor="middle" fill="#c4b5fd" font-size="10">Idle-training from Gold Logs</text>
+                <text x="140" y="87" text-anchor="middle" fill="#a78bfa" font-size="10">Goal: native mapping + settlement</text>
+            </g>
+            <!-- Process 8: QR Mirror Service -->
+            <g transform="translate(1020, 440)" filter="url(#glowDrop)">
+                <rect width="260" height="75" rx="16" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+                <text x="130" y="30" text-anchor="middle" fill="white" font-weight="bold">📲 QR Mirror Service</text>
+                <text x="130" y="50" text-anchor="middle" fill="#cbd5e1" font-size="11">Laptop auth via WhatsApp-style QR</text>
+                <text x="130" y="65" text-anchor="middle" fill="#9ca3af" font-size="9">Session token exchange</text>
+            </g>
+            <!-- Process 9: Fraud Engine -->
+            <g transform="translate(1020, 580)" filter="url(#glowDrop)">
+                <rect width="260" height="70" rx="16" fill="#991b1b" stroke="#ef4444" stroke-width="2"/>
+                <text x="130" y="30" text-anchor="middle" fill="#fecaca" font-weight="bold">⚠️ Fraud Detection Engine</text>
+                <text x="130" y="50" text-anchor="middle" fill="#fca5a5" font-size="11">IP-mismatch / Mock-GPS alerts</text>
+            </g>
+            
+            <!-- =============== DETAILED USER REQUESTS & FILE TRANSFERS =============== -->
+            <!-- 1. Register Request Flow -->
+            <path d="M230,190 L330,160" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#arrowBlue)" fill="none" class="animated-flow"/>
+            <text x="250" y="165" fill="#60a5fa" font-size="10">[1] Register (ID+Device)</text>
+            
+            <!-- 2. Login + Biometric Request -->
+            <path d="M230,210 L330,200" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#arrowBlue)" fill="none" class="animated-flow"/>
+            <text x="240" y="230" fill="#60a5fa" font-size="10">[2] Login / Biometric Auth</text>
+            
+            <!-- 3. Traceback store -->
+            <path d="M580,160 L610,860" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen)" fill="none" stroke-dasharray="8 4"/>
+            <text x="590" y="500" fill="#34d399" font-size="10">Persist binding</text>
+            
+            <!-- 4. Two-Point request from worker -->
+            <path d="M230,240 L330,310" stroke="#facc15" stroke-width="2.5" marker-end="url(#arrowGold)" fill="none" class="animated-flow"/>
+            <text x="250" y="285" fill="#facc15" font-size="10">[3] Two-Point request (A→B)</text>
+            
+            <!-- 5. Two-Point -> Escrow (feasibility) -->
+            <path d="M580,320 L670,320" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowGold)" fill="none"/>
+            <text x="610" y="310" fill="#fde047" font-size="10">Route feasible</text>
+            
+            <!-- 6. Escrow hold -> PostgreSQL Ledger -->
+            <path d="M805,320 L870,860" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrowGold)" fill="none" stroke-dasharray="7 3"/>
+            <text x="830" y="580" fill="#f97316" font-size="10">Reserve funds</text>
+            
+            <!-- 7. GPS check-in from worker to Auto Check-In -->
+            <path d="M230,270 L330,470" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrowBlue)" fill="none" class="animated-flow"/>
+            <text x="245" y="370" fill="#7aaef0" font-size="10">[4] Live GPS stream</text>
+            
+            <!-- 8. Auto Check-In -> Arrival trigger -> Escrow -->
+            <path d="M580,480 L670,460" stroke="#2dd4bf" stroke-width="2.5" marker-end="url(#arrowGreen)" fill="none"/>
+            <text x="610" y="465" fill="#5eead4" font-size="10">Arrival signal</text>
+            
+            <!-- 9. Biometric Handshake from Worker Phone -->
+            <path d="M230,310 L330,470" stroke="#e879f9" stroke-width="2.5" marker-end="url(#arrowPurple)" fill="none" class="animated-flow"/>
+            <text x="260" y="410" fill="#d8b4fe" font-size="10">[5] Fingerprint/Face</text>
+            
+            <!-- 10. Biometric -> Escrow final release -->
+            <path d="M805,490 L680,490 L680,365" stroke="#c084fc" stroke-width="2.5" marker-end="url(#arrowPurple)" fill="none"/>
+            <text x="740" y="475" fill="#c084fc" font-size="10">Release payment</text>
+            
+            <!-- 11. Escrow -> External Bank on-ramp/off-ramp -->
+            <path d="M930,320 L1350,480" stroke="#facc15" stroke-width="2.5" marker-end="url(#arrowGold)" fill="none" stroke-dasharray="6 4"/>
+            <text x="1120" y="390" fill="#fbbf24" font-size="10">Deposit/Withdraw fiat</text>
+            
+            <!-- 12. Supervisor monitoring request -->
+            <path d="M230,640 L330,580" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrowGreen)" fill="none" class="animated-flow"/>
+            <text x="250" y="605" fill="#34d399" font-size="10">[6] Live worker status</text>
+            
+            <!-- 13. RBAC account creation (CEO) -->
+            <path d="M230,430 L670,160" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrowBlue)" fill="none"/>
+            <text x="400" y="280" fill="#fb923c" font-size="10">Create Admin/Supervisor</text>
+            
+            <!-- 14. QR Mirror flow (Laptop) -->
+            <path d="M230,430 L1010,470" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowBlue)" fill="none" stroke-dasharray="5 3"/>
+            <text x="580" y="445" fill="#9ca3af" font-size="10">QR auth token</text>
+            
+            <!-- 15. Gold Logs (MongoDB) -> TechGeoAI -->
+            <path d="M1100,360 L1100,860" stroke="#c084fc" stroke-width="2.5" marker-end="url(#arrowPurple)" fill="none" class="animated-flow"/>
+            <text x="1120" y="600" fill="#c4b5fd" font-size="10">Gold Logs extraction</text>
+            
+            <!-- 16. Activity Noter (context to MongoDB) -->
+            <path d="M580,280 L580,550 L900,550 L950,860" stroke="#2dd4bf" stroke-width="2" marker-end="url(#arrowGreen)" fill="none" stroke-dasharray="6 3"/>
+            <text x="720" y="545" fill="#5eead4" font-size="10">User Intent / Context logs</text>
+            
+            <!-- 17. Fraud Engine alerts to Supervisor & Identity -->
+            <path d="M1020,650 L800,650 L800,640 L590,640" stroke="#ef4444" stroke-width="2.5" marker-end="url(#arrowBlue)" fill="none"/>
+            <text x="800" y="625" fill="#f87171" font-size="10">Fraud alerts</path>
+            <path d="M1020,620 L1020,500" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowBlue)" fill="none" stroke-dasharray="4 2"/>
+            
+            <!-- 18. TechGeoAI -> Two-Point (future native) -->
+            <path d="M1020,360 L940,360 L590,360" stroke="#c084fc" stroke-width="2" marker-end="url(#arrowPurple)" fill="none" stroke-dasharray="8 4"/>
+            <text x="800" y="350" fill="#d8b4fe" font-size="10">AI-native routing (evolution)</text>
+            
+            <!-- 19. File transfer: Shadow training dataset -->
+            <path d="M1100,880 L1100,920 L550,920 L550,890" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrowGold)" fill="none" stroke-dasharray="4 4"/>
+            <text x="800" y="935" fill="#fdba74" font-size="10">📁 File Transfer: Gold Logs → Training Pipeline</text>
+            
+            <!-- 20. PostgreSQL -> RBAC sync -->
+            <path d="M740,860 L680,205" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrowBlue)" fill="none"/>
+            
+            <!-- Additional user request: "AI Chat / Natural Language" -->
+            <path d="M230,350 L330,340 L590,340" stroke="#c084fc" stroke-width="2" marker-end="url(#arrowPurple)" fill="none" class="animated-flow"/>
+            <text x="370" y="335" fill="#d8b4fe" font-size="10">[7] AI natural language request</text>
+            
+            <!-- settlement atomic to bank -->
+            <path d="M805,320 L1200,320 L1350,440" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowGreen)" fill="none"/>
+            <text x="1100" y="310" fill="#34d399" font-size="10">Settlement executed</text>
+            
+            <!-- internal ledger update post-settlement -->
+            <path d="M870,860 L805,400" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen)" fill="none" stroke-dasharray="5 3"/>
         </svg>`;
     }
 
-    function buildLevel1() {
-        // Level 1: Login, Registration, device binding, QR mirror, traceback
-        return `<svg viewBox="0 0 1450 820" xmlns="http://www.w3.org/2000/svg">
-            <rect width="1450" height="820" fill="#030811" rx="26" stroke="#2d3e6e" stroke-width="1.5"/>
-            <text x="725" y="45" text-anchor="middle" fill="#a5f3fc" font-size="17" font-weight="bold">🔐 LEVEL 1 – LOGIN / REGISTER & TRACEBACK (Device Binding + QR Mirror)</text>
-            <defs><marker id="arrL1" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#38bdf8"/></marker></defs>
-            <!-- Worker registration flow -->
-            <g transform="translate(60, 180)">
-                <rect width="200" height="80" rx="14" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
-                <text x="100" y="30" text-anchor="middle" fill="white" font-weight="bold">📱 Mobile App</text>
-                <text x="100" y="52" text-anchor="middle" fill="#b9c7e0" font-size="11">National ID + Fingerprint</text>
-                <text x="100" y="68" text-anchor="middle" fill="#6b8cff" font-size="10">1:1 Device ID claim</text>
-            </g>
-            <g transform="translate(480, 120)">
-                <rect width="240" height="80" rx="20" fill="#0f2b3d" stroke="#2dd4bf" stroke-width="2"/>
-                <text x="120" y="30" text-anchor="middle" fill="white" font-weight="bold">🆔 Identity & Traceback Engine</text>
-                <text x="120" y="52" text-anchor="middle" fill="#bbf0ff" font-size="11">Verify National ID + Device Fingerprint</text>
-                <text x="120" y="68" text-anchor="middle" fill="#5eead4" font-size="10">Store in PostgreSQL (Traceback table)</text>
-            </g>
-            <g transform="translate(900, 120)">
-                <rect width="220" height="80" rx="20" fill="#1a2c3f" stroke="#34d399" stroke-width="2"/>
-                <text x="110" y="30" text-anchor="middle" fill="white" font-weight="bold">🗄️ PostgreSQL (Traceback)</text>
-                <text x="110" y="52" text-anchor="middle" fill="#bbf7d0" font-size="11">ID, Business verification</text>
-                <text x="110" y="68" text-anchor="middle" fill="#86efac" font-size="10">Device binding lock</text>
-            </g>
-            <!-- flows -->
-            <path d="M260,210 L470,160" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrL1)" fill="none" class="animated-flow"/>
-            <text x="350" y="175" fill="#7aaef0" font-size="11">Register / Login request</text>
-            <path d="M720,160 L890,155" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrL1)" fill="none"/>
-            <text x="790" y="145" fill="#34d399" font-size="11">Persist binding</text>
-            
-            <!-- QR Mirror Laptop -->
-            <g transform="translate(60, 430)">
-                <rect width="200" height="80" rx="14" fill="#111827" stroke="#f97316" stroke-width="2"/>
-                <text x="100" y="30" text-anchor="middle" fill="#fcd34d" font-weight="bold">💻 Laptop (Viewer)</text>
-                <text x="100" y="52" text-anchor="middle" fill="#cbd5e1" font-size="11">WhatsApp-style QR</text>
-                <text x="100" y="68" text-anchor="middle" fill="#fb923c" font-size="10">No transaction rights</text>
-            </g>
-            <g transform="translate(480, 400)">
-                <rect width="240" height="80" rx="20" fill="#2a3b52" stroke="#fbbf24" stroke-width="2"/>
-                <text x="120" y="30" text-anchor="middle" fill="white" font-weight="bold">📲 QR Mirror Service</text>
-                <text x="120" y="52" text-anchor="middle" fill="#fde68a" font-size="11">Session token exchange</text>
-                <text x="120" y="68" text-anchor="middle" fill="#fcd34d" font-size="10">Laptop ↔ Phone sync</text>
-            </g>
-            <path d="M260,470 L470,440" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrL1)" fill="none"/>
-            <text x="350" y="445" fill="#fbbf24" font-size="11">QR scan & auth</text>
-            <path d="M720,440 L880,440 L880,200" stroke="#f97316" stroke-width="2" marker-end="url(#arrL1)" fill="none" stroke-dasharray="6 3"/>
-            <text x="830" y="320" fill="#f97316" font-size="11">Link to Traceback</text>
-            <!-- Supervisor & RBAC hint -->
-            <g transform="translate(480, 580)">
-                <rect width="240" height="70" rx="18" fill="#0f172a" stroke="#10b981" stroke-width="2"/>
-                <text x="120" y="30" text-anchor="middle" fill="white" font-weight="bold">👑 RBAC – CEO creates Admins</text>
-                <text x="120" y="52" text-anchor="middle" fill="#a7f3d0" font-size="11">Hierarchical account spawning</text>
-            </g>
-            <path d="M600,500 L600,575" stroke="#10b981" stroke-width="2" marker-end="url(#arrL1)" fill="none"/>
-            <text x="620" y="540" fill="#34d399" font-size="10">Role assignment</text>
+    function buildUserRequestsFocus() {
+        // focus only on detailed user request flows, but still show entities/processes lightly
+        return `<svg viewBox="0 0 1600 1080" xmlns="http://www.w3.org/2000/svg">
+            <rect width="1600" height="1080" fill="#01050f" rx="28" stroke="#3b82f6" stroke-width="1.5"/>
+            <text x="800" y="45" text-anchor="middle" fill="#facc15" font-size="20" font-weight="bold">📨 DETAILED USER REQUESTS FLOW (Login · Register · Two-Point · AI · Settlement)</text>
+            <!-- replicate core entities + highlight numbered user actions -->
+            <g transform="translate(40,150)"><rect width="190" height="90" rx="16" fill="#0f172a" stroke="#3b82f6"/><text x="95" y="35" text-anchor="middle" fill="white">👤 Worker</text><text x="95" y="60" text-anchor="middle" fill="#93c5fd">Device + Bio</text></g>
+            <g transform="translate(40,400)"><rect width="190" height="90" rx="16" fill="#0f172a" stroke="#f97316"/><text x="95" y="35" text-anchor="middle" fill="white">💻 CEO/Laptop</text><text x="95" y="60" text-anchor="middle" fill="#fdba74">QR Mirror</text></g>
+            <g transform="translate(1300,480)"><rect width="180" height="80" rx="16" fill="#0f172a" stroke="#facc15"/><text x="90" y="35" text-anchor="middle" fill="white">🏦 M-Pesa</text></g>
+            <!-- processes -->
+            <g transform="translate(380,120)"><rect width="200" height="70" rx="14" fill="#1e3a8a"/><text x="100" y="35" text-anchor="middle" fill="white">Identity</text></g>
+            <g transform="translate(680,120)"><rect width="200" height="70" rx="14" fill="#0f766e"/><text x="100" y="35" text-anchor="middle" fill="white">RBAC</text></g>
+            <g transform="translate(380,280)"><rect width="200" height="70" rx="14" fill="#c2410c"/><text x="100" y="35" text-anchor="middle" fill="white">Escrow</text></g>
+            <g transform="translate(680,440)"><rect width="200" height="70" rx="14" fill="#a21caf"/><text x="100" y="35" text-anchor="middle" fill="white">Biometric</text></g>
+            <g transform="translate(1000,260)"><rect width="240" height="80" rx="20" fill="#4c1d95"/><text x="120" y="35" text-anchor="middle" fill="white">TechGeoAI</text></g>
+            <!-- numbered request arrows -->
+            <path d="M230,180 L370,155" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowBlue)" class="animated-flow"/><text x="280" y="160" fill="#3b82f6" font-weight="bold">① Register</text>
+            <path d="M230,210 L370,200" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowBlue)" class="animated-flow"/><text x="280" y="225" fill="#3b82f6" font-weight="bold">② Login</text>
+            <path d="M230,260 L370,310" stroke="#facc15" stroke-width="3" marker-end="url(#arrowGold)" class="animated-flow"/><text x="280" y="295" fill="#facc15" font-weight="bold">③ Two-Point A→B</text>
+            <path d="M230,320 L370,460" stroke="#c084fc" stroke-width="3" marker-end="url(#arrowPurple)" class="animated-flow"/><text x="270" y="400" fill="#c084fc" font-weight="bold">④ AI Chat / Routing</text>
+            <path d="M230,360 L370,470" stroke="#e879f9" stroke-width="3" marker-end="url(#arrowPurple)" class="animated-flow"/><text x="260" y="440" fill="#e879f9" font-weight="bold">⑤ Biometric Handshake</text>
+            <path d="M230,440 L680,490" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrowGold)" fill="none"/><text x="400" y="485" fill="#f97316" font-weight="bold">⑥ QR Mirror Request</text>
+            <path d="M580,320 L680,320" stroke="#34d399" stroke-width="3" marker-end="url(#arrowGreen)"/><text x="610" y="310" fill="#34d399">✅ Settlement Release</text>
+            <text x="800" y="850" fill="#facc15" font-size="18" font-weight="bold">🔁 All user requests flow through Identity → Two-Point → Escrow → Biometric → Settlement</text>
         </svg>`;
     }
 
-    function buildLevel2() {
-        // Level2: Two-Point, Ledger, Conditional Escrow, Settlement atomic, GPS+Biometric triggers
-        return `<svg viewBox="0 0 1500 850" xmlns="http://www.w3.org/2000/svg">
-            <rect width="1500" height="850" fill="#030811" rx="28" stroke="#3b4e7a" stroke-width="1.2"/>
-            <text x="750" y="45" text-anchor="middle" fill="#fed7aa" font-size="18" font-weight="bold">⚡ LEVEL 2 – CORE LEDGER & CONDITIONAL ESCROW (Two-Point Protocol + Settlement)</text>
-            <defs><marker id="arrL2" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0,0 L0,6 L10,3 z" fill="#facc15"/></marker></defs>
-            
-            <!-- Entities -->
-            <g transform="translate(50, 200)">
-                <rect width="180" height="70" rx="14" fill="#1e293b" stroke="#38bdf8"/><text x="90" y="32" text-anchor="middle" fill="white" font-weight="bold">📍 Worker GPS</text><text x="90" y="52" text-anchor="middle" fill="#b9c7e0" font-size="11">Point A → B</text>
-            </g>
-            <g transform="translate(380, 120)">
-                <rect width="220" height="70" rx="18" fill="#1e3a5f" stroke="#3b82f6"/><text x="110" y="32" text-anchor="middle" fill="white">🗺️ Two-Point Mapper</text><text x="110" y="52" text-anchor="middle" fill="#b9d0ff">Real-time traffic + feasibility</text>
-            </g>
-            <g transform="translate(700, 120)">
-                <rect width="240" height="70" rx="18" fill="#2d3a4e" stroke="#f97316"/><text x="120" y="32" text-anchor="middle" fill="white">💰 Conditional Escrow Engine</text><text x="120" y="52" text-anchor="middle" fill="#fed7aa">Hold funds (Reserved state)</text>
-            </g>
-            <g transform="translate(1050, 120)">
-                <rect width="220" height="70" rx="18" fill="#14532d" stroke="#34d399"/><text x="110" y="32" text-anchor="middle" fill="white">🧾 Internal Ledger (PG)</text><text x="110" y="52" text-anchor="middle" fill="#bbf7d0">Atomic transfers</text>
-            </g>
-            <!-- settlement triggers -->
-            <g transform="translate(450, 340)">
-                <rect width="260" height="80" rx="20" fill="#701a75" stroke="#c084fc"/><text x="130" y="30" text-anchor="middle" fill="white">🖐️ Biometric Handshake</text><text x="130" y="50" text-anchor="middle" fill="#e9d5ff">Fingerprint / Face SDK</text><text x="130" y="68" text-anchor="middle" fill="#d8b4fe">Final release signal</text>
-            </g>
-            <g transform="translate(450, 520)">
-                <rect width="260" height="80" rx="20" fill="#0f2b3d" stroke="#2dd4bf"/><text x="130" y="30" text-anchor="middle" fill="white">🛰️ Auto Check-In / GPS match</text><text x="130" y="50" text-anchor="middle" fill="#ccfbf1">IP + GPS arrival detection</text><text x="130" y="68" text-anchor="middle" fill="#5eead4">Trigger "Reached" status</text>
-            </g>
-            <!-- arrows -->
-            <path d="M230,230 L370,155" stroke="#60a5fa" stroke-width="2.5" marker-end="url(#arrL2)" fill="none" class="animated-flow"/>
-            <path d="M600,155 L690,155" stroke="#facc15" stroke-width="2.5" marker-end="url(#arrL2)" fill="none"/>
-            <path d="M940,155 L1040,155" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrL2)" fill="none"/>
-            <path d="M580,380 L580,440 L560,440 L560,510" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrL2)" fill="none" stroke-dasharray="8 4"/>
-            <text x="600" y="470" fill="#f97316" font-size="11">Condition satisfied</text>
-            <path d="M700,190 L700,380" stroke="#c084fc" stroke-width="2" marker-end="url(#arrL2)" fill="none"/>
-            <text x="720" y="280" fill="#c084fc" font-size="11">Escrow → Biometric</text>
-            <path d="M700,460 L820,155" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrL2)" fill="none"/>
-            <text x="780" y="280" fill="#34d399" font-size="11">Settlement executed</text>
+    function buildStorageFileTransferFocus() {
+        return `<svg viewBox="0 0 1600 1080" xmlns="http://www.w3.org/2000/svg">
+            <rect width="1600" height="1080" fill="#020617" rx="28" stroke="#2dd4bf" stroke-width="2"/>
+            <text x="800" y="45" text-anchor="middle" fill="#34d399" font-size="20" font-weight="bold">🗄️ DATA STORES & FILE TRANSFERS (PostgreSQL · MongoDB · Gold Logs Pipeline)</text>
+            <g transform="translate(300, 200)"><rect width="340" height="130" rx="24" fill="#0f172f" stroke="#38bdf8" stroke-width="3"/><text x="170" y="40" text-anchor="middle" fill="white" font-size="18">🗄️ PostgreSQL</text><text x="170" y="70" text-anchor="middle" fill="#bae6fd">Ledger · Escrow holds · Traceback</text><text x="170" y="95" text-anchor="middle" fill="#9ca3af">RBAC roles + atomic settlement</text></g>
+            <g transform="translate(800, 200)"><rect width="340" height="130" rx="24" fill="#0f172f" stroke="#2dd4bf" stroke-width="3"/><text x="170" y="40" text-anchor="middle" fill="white" font-size="18">📦 MongoDB</text><text x="170" y="70" text-anchor="middle" fill="#ccfbf1">Gold Logs · User Intent</text><text x="170" y="95" text-anchor="middle" fill="#9ca3af">Activity Noter + Shadow context</text></g>
+            <g transform="translate(550, 520)"><rect width="380" height="110" rx="26" fill="#4c1d95" stroke="#c084fc" stroke-width="2.5"/><text x="190" y="40" text-anchor="middle" fill="white" font-size="18">📁 File Transfer Pipeline</text><text x="190" y="68" text-anchor="middle" fill="#ddd6fe">Gold Logs Extraction → Training Folder</text><text x="190" y="90" text-anchor="middle" fill="#c4b5fd">LoRA fine-tuning on RTX 5090 (nightly)</text></g>
+            <path d="M970,330 L970,510" stroke="#c084fc" stroke-width="3.5" marker-end="url(#arrowPurple)" fill="none" class="animated-flow"/><text x="990" y="420" fill="#d8b4fe" font-size="14">Gold Logs transfer</text>
+            <path d="M640,330 L640,510" stroke="#34d399" stroke-width="3" marker-end="url(#arrowGreen)" fill="none"/><text x="660" y="420" fill="#34d399" font-size="14">Escrow state sync</text>
+            <path d="M550,630 L800,760 L1050,630" stroke="#f97316" stroke-width="3" marker-end="url(#arrowGold)" fill="none" stroke-dasharray="10 4"/><text x="800" y="720" fill="#fdba74" font-size="14">Model checkpoint files (Shadow Student)</text>
         </svg>`;
     }
 
-    function buildLevel3() {
-        // AI TALKS: Shadow Student, Gold Logs, LLM fine-tuning, TechGeoAI converses, decision making
-        return `<svg viewBox="0 0 1500 880" xmlns="http://www.w3.org/2000/svg">
-            <rect width="1500" height="880" fill="#050914" rx="30" stroke="#7c3aed" stroke-width="1.5"/>
-            <text x="750" y="45" text-anchor="middle" fill="#d9c6ff" font-size="18" font-weight="bold">🧠 LEVEL 3 – AI TALKS (TECHGEOAI SHADOW STUDENT + GOLD LOGS)</text>
-            <defs><marker id="arrAI" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0,0 L0,6 L10,3 z" fill="#a78bfa"/></marker></defs>
-            
-            <g transform="translate(100, 300)">
-                <rect width="260" height="100" rx="20" fill="#2e1065" stroke="#c084fc" stroke-width="2"/>
-                <text x="130" y="30" text-anchor="middle" fill="white" font-weight="bold">📜 Gold Logs (MongoDB)</text>
-                <text x="130" y="52" text-anchor="middle" fill="#ddd6fe">User Intent / Context</text>
-                <text x="130" y="72" text-anchor="middle" fill="#c4b5fd">Historical successful settlements</text>
-            </g>
-            <g transform="translate(520, 280)">
-                <rect width="300" height="110" rx="28" fill="#3b0764" stroke="#a78bfa" stroke-width="2.5" filter="url(#glow)"/>
-                <text x="150" y="35" text-anchor="middle" fill="#f0e7ff" font-weight="bold" font-size="16">🤖 TechGeoAI Shadow</text>
-                <text x="150" y="58" text-anchor="middle" fill="#e9d5ff">LoRA Fine-tuning (RTX 5090)</text>
-                <text x="150" y="78" text-anchor="middle" fill="#c4b5fd">Idle training from Gold Logs</text>
-                <text x="150" y="96" text-anchor="middle" fill="#a78bfa">Conversational & routing engine</text>
-            </g>
-            <g transform="translate(100, 560)">
-                <rect width="260" height="90" rx="20" fill="#0c1b2a" stroke="#2dd4bf"/>
-                <text x="130" y="32" text-anchor="middle" fill="white">🗣️ Worker / AI Dialog</text>
-                <text x="130" y="54" text-anchor="middle" fill="#bbf0ff">Natural language mapping requests</text>
-                <text x="130" y="72" text-anchor="middle" fill="#5eead4">Two-Point via AI reasoning</text>
-            </g>
-            <g transform="translate(950, 380)">
-                <rect width="280" height="90" rx="22" fill="#1e1b4b" stroke="#facc15"/>
-                <text x="140" y="32" text-anchor="middle" fill="white">⚙️ Head-to-Head Evaluator</text>
-                <text x="140" y="54" text-anchor="middle" fill="#fef08a">ChatGPT vs TechGeoAI</text>
-                <text x="140" y="72" text-anchor="middle" fill="#fde047">Accuracy parity → full native switch</text>
-            </g>
-            <!-- flows -->
-            <path d="M360,350 L510,330" stroke="#c084fc" stroke-width="3" marker-end="url(#arrAI)" fill="none" class="animated-flow"/>
-            <text x="420" y="320" fill="#d8b4fe" font-size="12">Gold Logs ingestion</text>
-            <path d="M820,340 L940,410" stroke="#facc15" stroke-width="2.5" marker-end="url(#arrAI)" fill="none"/>
-            <text x="860" y="390" fill="#facc15" font-size="11">Benchmark & switch</text>
-            <path d="M360,610 L520,390" stroke="#60a5fa" stroke-width="2.5" marker-end="url(#arrAI)" fill="none" stroke-dasharray="7 3"/>
-            <text x="430" y="490" fill="#7aa9ff" font-size="11">AI contextual suggestion</text>
-            <path d="M700,280 L700,200 L480,200 L360,300" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrAI)" fill="none"/>
-            <text x="550" y="210" fill="#c4b5fd" font-size="11">Autonomous evolution</text>
-        </svg>`;
+    const svgContainer = document.getElementById('svgContainer');
+    let currentView = 'full';
+
+    function renderView(view) {
+        if (view === 'full') svgContainer.innerHTML = buildFullMasterDFD();
+        else if (view === 'requests') svgContainer.innerHTML = buildUserRequestsFocus();
+        else svgContainer.innerHTML = buildStorageFileTransferFocus();
+        // re-apply animated class
+        const animatedPaths = svgContainer.querySelectorAll('.animated-flow');
+        animatedPaths.forEach(p => p.style.animation = 'flowDash 0.55s linear infinite');
     }
 
-    function buildLevel4() {
-        // MAX Level: Recursive Evolution, Autonomous Settlement without external APIs, full native mapping
-        return `<svg viewBox="0 0 1550 900" xmlns="http://www.w3.org/2000/svg">
-            <rect width="1550" height="900" fill="#020617" rx="30" stroke="#a855f7" stroke-width="2"/>
-            <text x="775" y="55" text-anchor="middle" fill="#e9d5ff" font-size="20" font-weight="bold">🚀 LEVEL 4 – AUTONOMOUS EVOLUTION (Recursive Shadow + Self-Healing Economy)</text>
-            <defs><marker id="arrL4" markerWidth="12" markerHeight="12" refX="10" refY="4" orient="auto"><path d="M0,0 L0,6 L12,3 z" fill="#f472b6"/></marker></defs>
-            
-            <g transform="translate(100, 180)">
-                <rect width="280" height="100" rx="24" fill="#4c1d95" stroke="#e879f9" stroke-width="2.5"/>
-                <text x="140" y="32" text-anchor="middle" fill="white" font-weight="bold">🌀 Recursive Shadow Pipeline</text>
-                <text x="140" y="55" text-anchor="middle" fill="#f5d0fe">Nightly LoRA training on new Gold Logs</text>
-                <text x="140" y="78" text-anchor="middle" fill="#f0abfc">Continuous model distillation</text>
-            </g>
-            <g transform="translate(550, 160)">
-                <rect width="320" height="110" rx="28" fill="#064e3b" stroke="#34d399" stroke-width="2.5"/>
-                <text x="160" y="35" text-anchor="middle" fill="white" font-weight="bold" font-size="16">🌍 Native TechGeoAI Core</text>
-                <text x="160" y="58" text-anchor="middle" fill="#a7f3d0">No external APIs (Maps/ChatGPT free)</text>
-                <text x="160" y="78" text-anchor="middle" fill="#6ee7b7">Autonomous Two-Point mapping</text>
-                <text x="160" y="98" text-anchor="middle" fill="#34d399">Self-settle + Biometric orchestration</text>
-            </g>
-            <g transform="translate(1050, 200)">
-                <rect width="280" height="90" rx="24" fill="#0f172a" stroke="#facc15"/>
-                <text x="140" y="32" text-anchor="middle" fill="white">📈 Zero Trust Settlement</text>
-                <text x="140" y="54" text-anchor="middle" fill="#fef08a">Fully internal ledger, no oracle needed</text>
-                <text x="140" y="74" text-anchor="middle" fill="#fde047">Global scalability</text>
-            </g>
-            <!-- multi-step autonomous -->
-            <path d="M380,230 L540,215" stroke="#f472b6" stroke-width="3" marker-end="url(#arrL4)" fill="none" class="animated-flow"/>
-            <text x="450" y="205" fill="#f9a8d4" font-size="12">Model update push</text>
-            <path d="M870,215 L1040,245" stroke="#facc15" stroke-width="2.5" marker-end="url(#arrL4)" fill="none"/>
-            <text x="940" y="230" fill="#facc15" font-size="12">Autonomous settlement flow</text>
-            <g transform="translate(300, 500)">
-                <rect width="360" height="100" rx="28" fill="#2d1b4e" stroke="#a855f7" stroke-width="2"/>
-                <text x="180" y="35" text-anchor="middle" fill="white" font-weight="bold">⚡ Full Recursive Evolution Cycle</text>
-                <text x="180" y="58" text-anchor="middle" fill="#ddd6fe">Data → Gold Logs → Shadow Training → Native AI</text>
-                <text x="180" y="78" text-anchor="middle" fill="#c4b5fd">No ChatGPT dependency, sovereign intelligence</text>
-            </g>
-            <path d="M680,270 L680,490" stroke="#c084fc" stroke-width="3" marker-end="url(#arrL4)" fill="none"/>
-            <text x="700" y="380" fill="#d8b4fe" font-size="12">Self-improving logic</text>
-            <g transform="translate(880, 560)">
-                <rect width="280" height="80" rx="20" fill="#1e1b2f" stroke="#60a5fa"/>
-                <text x="140" y="32" text-anchor="middle" fill="white">🔁 Idle-Train Loop (RTX 5090)</text>
-                <text x="140" y="55" text-anchor="middle" fill="#93c5fd">Continuous background evolution</text>
-            </g>
-            <path d="M660,600 L870,600" stroke="#60a5fa" stroke-width="2.5" marker-end="url(#arrL4)" fill="none"/>
-        </svg>`;
-    }
-
-    // current active level
-    let currentLevel = 'L0';
-    const svgContainer = document.getElementById('svgRoot');
-    const btnMap = {
-        'L0': buildLevel0, 'L1': buildLevel1, 'L2': buildLevel2, 'L3': buildLevel3, 'L4': buildLevel4
-    };
-    function renderLevel(level) {
-        const builder = btnMap[level];
-        if(builder) {
-            svgContainer.innerHTML = builder();
-            // add animation class to any .animated-flow elements after injection
-            const animatedPaths = svgContainer.querySelectorAll('.animated-flow');
-            animatedPaths.forEach(p => {
-                p.style.animation = 'flowData 0.45s linear infinite';
-            });
-        }
-    }
-    // event listeners
-    document.querySelectorAll('.level-btn').forEach(btn => {
+    document.querySelectorAll('.ctrl-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            const lvl = btn.getAttribute('data-level');
-            if(!lvl) return;
-            document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+            const view = btn.getAttribute('data-view');
+            if (!view) return;
+            document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            currentLevel = lvl;
-            renderLevel(currentLevel);
+            currentView = view;
+            renderView(currentView);
         });
     });
-    // initial render L0
-    renderLevel('L0');
-    // periodic pulse for dynamic feel
-    setInterval(() => {
-        const animated = document.querySelectorAll('.animated-flow');
-        animated.forEach(p => {
-            p.style.animation = 'none';
-            setTimeout(() => { if(p) p.style.animation = 'flowData 0.45s linear infinite'; }, 10);
-        });
-    }, 2800);
+    renderView('full');
 </script>
 </body>
 </html>
