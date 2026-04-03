@@ -5,32 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alarm Timetable</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #f0f4f8;
-    padding: 20px;
-    color: #333;
-  }
+  body { font-family: Arial, sans-serif; background: #f0f4f8; padding: 20px; color: #333; }
   h1 { text-align: center; margin-bottom: 20px; }
   table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
   th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
   th { background: #4a90e2; color: #fff; }
   tr:nth-child(even) { background: #f9f9f9; }
-  .button {
-    margin: 20px 0;
-    display: inline-block;
-    width: 250px;
-    padding: 10px;
-    background: #4a90e2;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    text-align: center;
-    transition: 0.3s;
-  }
+  .button { margin: 20px 0; display: inline-block; width: 250px; padding: 10px; background: #4a90e2; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; text-align: center; transition: 0.3s; }
   .button:hover { background: #357ABD; }
+  #stopButton { background: #e24a4a; }
 </style>
 </head>
 <body>
@@ -58,10 +41,10 @@
 </table>
 
 <button class="button" onclick="startAlarms()">Start Alarm Notifications</button>
-<button class="button" id="stopButton" onclick="stopAlarm()" style="background:#e24a4a;">Stop Alarm</button>
+<button class="button" id="stopButton" onclick="stopAlarm()">Stop Alarm</button>
 
 <audio id="alarmAudio" loop>
-  <source src="CHUNGA BY _ITEN BOY (official video) 10K Views - ITENBOY PSALMIST.mp3" type="audio/ogg">
+  <source src="hello.mp3" type="audio/ogg">
   Your browser does not support the audio element.
 </audio>
 
@@ -95,9 +78,8 @@ function speak(text) {
 }
 
 function startAlarms() {
-  speak("Geoffrey, Alarms started. I will notify you when each activity begins.");
+  speak("Alarms started, Geoffrey. I will notify you when each activity begins.");
   
-  // Check every 10 seconds
   alarmInterval = setInterval(() => {
     const now = new Date();
     const hours = now.getHours();
@@ -106,10 +88,12 @@ function startAlarms() {
     schedule.forEach(item => {
       const [h, m] = item.time.split(":").map(Number);
       if(h === hours && m === minutes) {
-        // Speak first
         speak(`Geoffrey, it is time for ${item.activity}`);
-        // Play alarm tone
-        alarmAudio.play();
+        // Only play alarm sound between 7:30 AM and 12:00 PM
+        const totalMinutes = hours * 60 + minutes;
+        if(totalMinutes >= 450 && totalMinutes <= 720) { // 450=7:30, 720=12:00
+          alarmAudio.play();
+        }
       }
     });
   }, 10000);
