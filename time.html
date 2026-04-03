@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alarm Timetable</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f0f4f8;
+    padding: 20px;
+    color: #333;
+  }
+  h1 { text-align: center; margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+  th { background: #4a90e2; color: #fff; }
+  tr:nth-child(even) { background: #f9f9f9; }
+  .button {
+    margin: 20px 0;
+    display: inline-block;
+    width: 250px;
+    padding: 10px;
+    background: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    transition: 0.3s;
+  }
+  .button:hover { background: #357ABD; }
+</style>
+</head>
+<body>
+
+<h1>Alarm Timetable</h1>
+
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Notes</th></tr>
+  <tr><td>7:30–8:00 AM</td><td>Wake up + light snack</td><td>Fruit, nuts, or yogurt</td></tr>
+  <tr><td>8:00–10:00 AM</td><td>Study / reading</td><td>Brain prime time; focus on one subject/topic</td></tr>
+  <tr><td>10:00–10:15 AM</td><td>Short break</td><td>Stretch, hydrate, breathe</td></tr>
+  <tr><td>10:15–12:00 PM</td><td>Study / reading</td><td>Continue brain work</td></tr>
+  <tr><td>12:00–1:00 PM</td><td>Lunch / rest</td><td>Eat balanced meal, relax</td></tr>
+  <tr><td>1:00–2:00 PM</td><td>Walk / light exercise</td><td>Outdoors if possible, notice surroundings</td></tr>
+  <tr><td>2:00–3:30 PM</td><td>Study / review</td><td>Focus on lighter topics or revision</td></tr>
+  <tr><td>3:30–4:00 PM</td><td>Snack + water</td><td>Keep energy steady</td></tr>
+  <tr><td>4:00–5:00 PM</td><td>Walk / stretching</td><td>Optional: smile at people if you like</td></tr>
+  <tr><td>5:00–6:00 PM</td><td>Study / reflection</td><td>Summarize what you learned today</td></tr>
+  <tr><td>6:00–7:00 PM</td><td>Dinner</td><td>Balanced, not too heavy</td></tr>
+  <tr><td>7:00–8:00 PM</td><td>Music / chill</td><td>Listen to music, relax introvert style</td></tr>
+  <tr><td>8:00–9:00 PM</td><td>Light activity</td><td>Stretching, short walk, or light cleaning</td></tr>
+  <tr><td>9:00–11:30 PM</td><td>Relax / hobby / videos</td><td>Brain winding down; avoid stress</td></tr>
+  <tr><td>11:30–12:00 AM</td><td>Prepare for bed</td><td>Lights dim, reduce screens</td></tr>
+  <tr><td>12:00 AM</td><td>Sleep</td><td>Consistent bedtime</td></tr>
+</table>
+
+<button class="button" onclick="startAlarms()">Start Alarm Notifications</button>
+<button class="button" id="stopButton" onclick="stopAlarm()" style="background:#e24a4a;">Stop Alarm</button>
+
+<audio id="alarmAudio" loop>
+  <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+const schedule = [
+  { time: "7:30", activity: "Wake up + light snack" },
+  { time: "8:00", activity: "Study / reading" },
+  { time: "10:00", activity: "Short break" },
+  { time: "10:15", activity: "Study / reading" },
+  { time: "12:00", activity: "Lunch / rest" },
+  { time: "13:00", activity: "Walk / light exercise" },
+  { time: "14:00", activity: "Study / review" },
+  { time: "15:30", activity: "Snack + water" },
+  { time: "16:00", activity: "Walk / stretching" },
+  { time: "17:00", activity: "Study / reflection" },
+  { time: "18:00", activity: "Dinner" },
+  { time: "19:00", activity: "Music / chill" },
+  { time: "20:00", activity: "Light activity" },
+  { time: "21:00", activity: "Relax / hobby / videos" },
+  { time: "23:30", activity: "Prepare for bed" },
+  { time: "0:00", activity: "Sleep" }
+];
+
+let alarmInterval;
+const alarmAudio = document.getElementById('alarmAudio');
+
+function speak(text) {
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.rate = 1;
+  window.speechSynthesis.speak(utter);
+}
+
+function startAlarms() {
+  speak("Alarms started, Geoffrey. I will notify you when each activity begins.");
+  
+  // Check every 10 seconds
+  alarmInterval = setInterval(() => {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+
+    schedule.forEach(item => {
+      const [h, m] = item.time.split(":").map(Number);
+      if(h === hours && m === minutes) {
+        // Speak first
+        speak(`Geoffrey, it is time for ${item.activity}`);
+        // Play alarm tone
+        alarmAudio.play();
+      }
+    });
+  }, 10000);
+}
+
+function stopAlarm() {
+  alarmAudio.pause();
+  alarmAudio.currentTime = 0;
+}
+</script>
+
+</body>
+</html>
