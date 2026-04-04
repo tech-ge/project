@@ -2,455 +2,146 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>TechGeo | MASTER DATA FLOW DIAGRAM - All Entities, Processes, Stores & User Requests</title>
-    <!-- Font Awesome 6 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Linux Multi-Alarm System</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #01050f;
-            font-family: 'Inter', 'Segoe UI', 'Roboto', system-ui, sans-serif;
-            padding: 1.5rem;
-            color: #edf2ff;
-        }
-
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        /* header */
-        .master-header {
-            text-align: center;
-            margin-bottom: 1.8rem;
-        }
-        .master-header h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff, #60a5fa, #f472b6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .master-header p {
-            color: #8ba0c0;
-            font-family: monospace;
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-        }
-
-        /* controls */
-        .view-controls {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.7rem;
-            margin-bottom: 1.5rem;
-        }
-        .ctrl-btn {
-            background: #0f1428;
-            border: 1px solid #2d3e6e;
-            padding: 0.5rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: #bfd6ff;
-        }
-        .ctrl-btn i { margin-right: 6px; }
-        .ctrl-btn.active {
-            background: #2563eb;
-            border-color: #7aa9ff;
-            color: white;
-            box-shadow: 0 0 12px #2563eb60;
-        }
-        .ctrl-btn:hover:not(.active) {
-            background: #1e2a4a;
-        }
-
-        /* svg wrapper (big canvas) */
-        .diagram-canvas {
-            background: #030712;
-            border-radius: 1.8rem;
-            border: 1px solid #1f2a4e;
-            padding: 0.8rem;
-            overflow-x: auto;
-            box-shadow: 0 20px 35px -10px black;
-        }
-        svg {
-            min-width: 1450px;
-            width: 100%;
-            height: auto;
-            background: #01050f;
-            border-radius: 1.2rem;
-            display: block;
-            font-family: 'Inter', 'Segoe UI', monospace;
-        }
-
-        /* legend */
-        .legend-panel {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1.8rem;
-            margin-top: 1.5rem;
-            background: #0b1120aa;
-            backdrop-filter: blur(8px);
-            border-radius: 2rem;
-            padding: 0.6rem 1.5rem;
-            border: 1px solid #29355f;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.75rem;
-        }
-        .badge {
-            background: #101a30;
-            padding: 0.2rem 0.6rem;
-            border-radius: 30px;
-            font-family: monospace;
-            font-size: 0.7rem;
-        }
-
-        @keyframes flowDash {
-            0% { stroke-dashoffset: 16; }
-            100% { stroke-dashoffset: 0; }
-        }
-        .animated-flow {
-            animation: flowDash 0.55s linear infinite;
-        }
-
-        @media (max-width: 850px) {
-            body { padding: 0.8rem; }
-            .ctrl-btn { padding: 0.3rem 0.8rem; font-size: 0.7rem; }
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #e0e0e0; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .card { background: #1e1e1e; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); width: 100%; max-width: 500px; margin-bottom: 20px; }
+        input, select, button { padding: 10px; margin: 5px; border-radius: 5px; border: 1px solid #333; background: #2d2d2d; color: white; }
+        button { cursor: pointer; background: #3498db; border: none; font-weight: bold; }
+        button:hover { background: #2980b9; }
+        .alarm-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #333; }
+        .alarm-item.inactive { opacity: 0.5; }
+        .delete-btn { background: #e74c3c; padding: 5px 10px; }
+        .days-row { font-size: 12px; color: #aaa; }
+        #current-time { font-size: 32px; font-weight: bold; color: #3498db; margin-bottom: 10px; }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="master-header">
-        <a href="time.html"><button>time</button></a>
-        <h1><i class="fas fa-project-diagram"></i> TechGeo · COMPLETE DATA FLOW (ONE CHART)</h1>
-        <p>External Entities | Core Processes | Data Stores | File Transfers | Detailed User Requests (Login · Register · Two-Point · Escrow · AI · Settlement)</p>
+
+    <div id="current-time">00:00:00</div>
+
+    <div class="card">
+        <h3>Add New Alarm</h3>
+        <input type="time" id="new-time" value="05:20">
+        <select id="new-freq">
+            <option value="once">Once</option>
+            <option value="daily">Daily</option>
+            <option value="weekdays">Mon-Fri</option>
+        </select>
+        <input type="text" id="sound-url" placeholder="Sound URL (Optional)" value="alarm.mp3">
+        <button onclick="addAlarm()">Add Alarm</button>
     </div>
 
-    <div class="view-controls">
-        <button class="ctrl-btn active" data-view="full"><i class="fas fa-eye"></i> Full Master DFD (All Layers)</button>
-        <button class="ctrl-btn" data-view="requests"><i class="fas fa-user-check"></i> Focus: User Requests + Flows</button>
-        <button class="ctrl-btn" data-view="storage"><i class="fas fa-database"></i> Focus: Data Stores & File Transfers</button>
-    </div>
+    <div class="card" id="alarm-list">
+        <h3>Active Alarms</h3>
+        </div>
 
-    <div class="diagram-canvas" id="svgContainer">
-        <!-- SVG injected dynamically -->
-    </div>
+    <audio id="master-audio" loop></audio>
+    <button id="stop-btn" style="display:none; background:red; width:200px; font-size:20px;" onclick="stopAlarm()">STOP ALARM</button>
 
-    <div class="legend-panel">
-        <div class="legend-item"><i class="fas fa-user-circle" style="color:#60a5fa;"></i> <span>External Entity</span><span class="badge">Worker/CEO/Bank</span></div>
-        <div class="legend-item"><i class="fas fa-microchip" style="color:#f59e0b;"></i> <span>Process / Engine</span></div>
-        <div class="legend-item"><i class="fas fa-database" style="color:#34d399;"></i> <span>Data Store (PostgreSQL/MongoDB)</span></div>
-        <div class="legend-item"><i class="fas fa-robot" style="color:#c084fc;"></i> <span>TechGeoAI (Shadow)</span></div>
-        <div class="legend-item"><i class="fas fa-file-alt" style="color:#f97316;"></i> <span>File Transfer / Gold Logs</span></div>
-        <div class="legend-item"><i class="fas fa-arrow-right" style="color:#7aa9ff;"></i> <span>Data / Request Flow (animated)</span></div>
-    </div>
-</div>
+    <script>
+        let alarms = JSON.parse(localStorage.getItem('linux_alarms')) || [];
+        const audio = document.getElementById('master-audio');
 
-<script>
-    // ------------------------------------------------------------------
-    // ONE MASSIVE DETAILED DFD: all external entities, processes, stores, file transfers, user requests
-    // includes: login, register, two-point mapping, escrow, biometric, AI shadow, gold logs, hierarchical RBAC, etc.
-    // ------------------------------------------------------------------
-    function buildFullMasterDFD() {
-        return `<svg viewBox="0 0 1600 1080" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="bgMaster" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#020617"/><stop offset="100%" stop-color="#070e1a"/></linearGradient>
-                <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#3b82f6"/></marker>
-                <marker id="arrowGold" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#fbbf24"/></marker>
-                <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#34d399"/></marker>
-                <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#c084fc"/></marker>
-                <filter id="glowDrop"><feDropShadow dx="2" dy="3" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/></filter>
-            </defs>
-            <rect width="1600" height="1080" fill="url(#bgMaster)" rx="32" stroke="#25345c" stroke-width="2"/>
-            <text x="800" y="45" text-anchor="middle" fill="#e2e8ff" font-size="20" font-weight="800" letter-spacing="1">🔷 TECHGEO — GLOBAL UNIFIED DATA FLOW (EXTERNAL ENTITIES · PROCESSES · STORES · REQUESTS) 🔷</text>
+        function addAlarm() {
+            const time = document.getElementById('new-time').value;
+            const freq = document.getElementById('new-freq').value;
+            const sound = document.getElementById('sound-url').value;
             
-            <!-- =============== EXTERNAL ENTITIES (LEFT & RIGHT) =============== -->
-            <!-- 1. Worker (Primary Phone) -->
-            <g transform="translate(30, 160)" filter="url(#glowDrop)">
-                <rect width="200" height="100" rx="18" fill="#0f172a" stroke="#3b82f6" stroke-width="2.5"/>
-                <text x="100" y="32" text-anchor="middle" fill="#f1f5f9" font-weight="bold" font-size="14"><tspan>📱 Worker</tspan></text>
-                <text x="100" y="52" text-anchor="middle" fill="#93c5fd" font-size="11">Primary Phone (Bio+GPS)</text>
-                <text x="100" y="70" text-anchor="middle" fill="#6b8cff" font-size="10">1 Phone : 1 National ID</text>
-                <text x="100" y="86" text-anchor="middle" fill="#475569" font-size="9">Device fingerprint</text>
-            </g>
-            <!-- 2. CEO / Admin (Laptop) -->
-            <g transform="translate(30, 380)" filter="url(#glowDrop)">
-                <rect width="200" height="100" rx="18" fill="#0f172a" stroke="#f97316" stroke-width="2.5"/>
-                <text x="100" y="32" text-anchor="middle" fill="#f1f5f9" font-weight="bold" font-size="14"><tspan>💻 CEO / Admin</tspan></text>
-                <text x="100" y="52" text-anchor="middle" fill="#fdba74" font-size="11">Laptop (QR Mirror)</text>
-                <text x="100" y="70" text-anchor="middle" fill="#fb923c" font-size="10">View-only + Account Creation</text>
-                <text x="100" y="86" text-anchor="middle" fill="#9ca3af" font-size="9">No transaction rights</text>
-            </g>
-            <!-- 3. Supervisor -->
-            <g transform="translate(30, 600)" filter="url(#glowDrop)">
-                <rect width="200" height="90" rx="18" fill="#0f172a" stroke="#10b981" stroke-width="2.5"/>
-                <text x="100" y="32" text-anchor="middle" fill="#f1f5f9" font-weight="bold" font-size="14"><tspan>📊 Supervisor</tspan></text>
-                <text x="100" y="52" text-anchor="middle" fill="#6ee7b7" font-size="11">Live Map Monitor</text>
-                <text x="100" y="70" text-anchor="middle" fill="#34d399" font-size="10">Check-In / GPS Alerts</text>
-            </g>
-            <!-- 4. External Bank (M-Pesa) -->
-            <g transform="translate(1360, 480)" filter="url(#glowDrop)">
-                <rect width="200" height="90" rx="18" fill="#0f172a" stroke="#facc15" stroke-width="2.5" stroke-dasharray="6 3"/>
-                <text x="100" y="32" text-anchor="middle" fill="#fef08a" font-weight="bold" font-size="14"><tspan>🏦 M-Pesa/Bank</tspan></text>
-                <text x="100" y="52" text-anchor="middle" fill="#fde047" font-size="11">External On/Off Ramp</text>
-                <text x="100" y="70" text-anchor="middle" fill="#ca8a04" font-size="10">API Gateway</text>
-            </g>
-            
-            <!-- =============== DATA STORES =============== -->
-            <g transform="translate(620, 860)" filter="url(#glowDrop)">
-                <rect width="270" height="100" rx="20" fill="#0f172f" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="5 3"/>
-                <text x="135" y="30" text-anchor="middle" fill="#bae6fd" font-weight="bold">🗄️ PostgreSQL (Primary Store)</text>
-                <text x="135" y="52" text-anchor="middle" fill="#9ca3af" font-size="11">• Internal Ledger (Balances/Escrow)</text>
-                <text x="135" y="68" text-anchor="middle" fill="#9ca3af" font-size="11">• Traceback Table (ID+Device)</text>
-                <text x="135" y="84" text-anchor="middle" fill="#6b7280" font-size="10">• RBAC Roles & Settlement atomic</text>
-            </g>
-            <g transform="translate(960, 860)" filter="url(#glowDrop)">
-                <rect width="280" height="100" rx="20" fill="#0f172f" stroke="#2dd4bf" stroke-width="2.5" stroke-dasharray="5 3"/>
-                <text x="140" y="30" text-anchor="middle" fill="#ccfbf1" font-weight="bold">📦 MongoDB (Activity Store)</text>
-                <text x="140" y="52" text-anchor="middle" fill="#9ca3af" font-size="11">• Gold Logs (User Intent/Context)</text>
-                <text x="140" y="68" text-anchor="middle" fill="#9ca3af" font-size="11">• Activity Noter logs</text>
-                <text x="140" y="84" text-anchor="middle" fill="#2dd4bf" font-size="10">• Shadow Student training data</text>
-            </g>
-            
-            <!-- =============== CORE PROCESSES (MIDDLE) =============== -->
-            <!-- Process 1: Identity & Traceback -->
-            <g transform="translate(340, 120)" filter="url(#glowDrop)">
-                <rect width="240" height="85" rx="16" fill="#1e3a8a" stroke="#60a5fa" stroke-width="2"/>
-                <text x="120" y="30" text-anchor="middle" fill="white" font-weight="bold">🔐 Identity & Traceback</text>
-                <text x="120" y="50" text-anchor="middle" fill="#bfdbfe" font-size="11">National ID + Device Fingerprint</text>
-                <text x="120" y="68" text-anchor="middle" fill="#93c5fd" font-size="10">Mock-GPS detection</text>
-            </g>
-            <!-- Process 2: RBAC Hierarchy -->
-            <g transform="translate(680, 120)" filter="url(#glowDrop)">
-                <rect width="250" height="85" rx="16" fill="#0f766e" stroke="#2dd4bf" stroke-width="2"/>
-                <text x="125" y="30" text-anchor="middle" fill="white" font-weight="bold">👑 RBAC Governance</text>
-                <text x="125" y="50" text-anchor="middle" fill="#ccfbf1" font-size="11">CEO → Admin → Supervisor → Worker</text>
-                <text x="125" y="68" text-anchor="middle" fill="#5eead4" font-size="10">Account creation & permissions</text>
-            </g>
-            <!-- Process 3: Two-Point Protocol -->
-            <g transform="translate(340, 280)" filter="url(#glowDrop)">
-                <rect width="240" height="85" rx="16" fill="#1e3a8a" stroke="#facc15" stroke-width="2"/>
-                <text x="120" y="30" text-anchor="middle" fill="white" font-weight="bold">📍 Two-Point Mapper</text>
-                <text x="120" y="50" text-anchor="middle" fill="#fef08a" font-size="11">A (Work) → B (Accommodation)</text>
-                <text x="120" y="68" text-anchor="middle" fill="#fde047" font-size="10">Real-time GPS + Traffic</text>
-            </g>
-            <!-- Process 4: Conditional Escrow -->
-            <g transform="translate(680, 280)" filter="url(#glowDrop)">
-                <rect width="250" height="85" rx="16" fill="#c2410c" stroke="#f97316" stroke-width="2"/>
-                <text x="125" y="30" text-anchor="middle" fill="white" font-weight="bold">💰 Conditional Escrow</text>
-                <text x="125" y="50" text-anchor="middle" fill="#fed7aa" font-size="11">Hold funds: Reserved state</text>
-                <text x="125" y="68" text-anchor="middle" fill="#ffedcc" font-size="10">Release on [Arrival+Biometric]</text>
-            </g>
-            <!-- Process 5: Live Check-In / Auto-Arrival -->
-            <g transform="translate(340, 440)" filter="url(#glowDrop)">
-                <rect width="240" height="85" rx="16" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
-                <text x="120" y="30" text-anchor="middle" fill="white" font-weight="bold">🛰️ Auto Check-In Engine</text>
-                <text x="120" y="50" text-anchor="middle" fill="#e0f2fe" font-size="11">GPS + Workplace IP Match</text>
-                <text x="120" y="68" text-anchor="middle" fill="#bae6fd" font-size="10">Triggers "Arrived" status</text>
-            </g>
-            <!-- Process 6: Biometric Handshake -->
-            <g transform="translate(680, 440)" filter="url(#glowDrop)">
-                <rect width="250" height="85" rx="16" fill="#a21caf" stroke="#e879f9" stroke-width="2"/>
-                <text x="125" y="30" text-anchor="middle" fill="white" font-weight="bold">🖐️ Biometric Handshake</text>
-                <text x="125" y="50" text-anchor="middle" fill="#f3e8ff" font-size="11">Fingerprint / Face SDK</text>
-                <text x="125" y="68" text-anchor="middle" fill="#e9d5ff" font-size="10">Final payment trigger</text>
-            </g>
-            <!-- Process 7: TechGeoAI Shadow -->
-            <g transform="translate(1020, 260)" filter="url(#glowDrop)">
-                <rect width="280" height="100" rx="22" fill="#4c1d95" stroke="#c084fc" stroke-width="2.5"/>
-                <text x="140" y="30" text-anchor="middle" fill="white" font-weight="bold">🧠 TechGeoAI (Shadow Student)</text>
-                <text x="140" y="52" text-anchor="middle" fill="#ddd6fe" font-size="11">LoRA fine-tuning (RTX 5090)</text>
-                <text x="140" y="70" text-anchor="middle" fill="#c4b5fd" font-size="10">Idle-training from Gold Logs</text>
-                <text x="140" y="87" text-anchor="middle" fill="#a78bfa" font-size="10">Goal: native mapping + settlement</text>
-            </g>
-            <!-- Process 8: QR Mirror Service -->
-            <g transform="translate(1020, 440)" filter="url(#glowDrop)">
-                <rect width="260" height="75" rx="16" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
-                <text x="130" y="30" text-anchor="middle" fill="white" font-weight="bold">📲 QR Mirror Service</text>
-                <text x="130" y="50" text-anchor="middle" fill="#cbd5e1" font-size="11">Laptop auth via WhatsApp-style QR</text>
-                <text x="130" y="65" text-anchor="middle" fill="#9ca3af" font-size="9">Session token exchange</text>
-            </g>
-            <!-- Process 9: Fraud Engine -->
-            <g transform="translate(1020, 580)" filter="url(#glowDrop)">
-                <rect width="260" height="70" rx="16" fill="#991b1b" stroke="#ef4444" stroke-width="2"/>
-                <text x="130" y="30" text-anchor="middle" fill="#fecaca" font-weight="bold">⚠️ Fraud Detection Engine</text>
-                <text x="130" y="50" text-anchor="middle" fill="#fca5a5" font-size="11">IP-mismatch / Mock-GPS alerts</text>
-            </g>
-            
-            <!-- =============== DETAILED USER REQUESTS & FILE TRANSFERS =============== -->
-            <!-- 1. Register Request Flow -->
-            <path d="M230,190 L330,160" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#arrowBlue)" fill="none" class="animated-flow"/>
-            <text x="250" y="165" fill="#60a5fa" font-size="10">[1] Register (ID+Device)</text>
-            
-            <!-- 2. Login + Biometric Request -->
-            <path d="M230,210 L330,200" stroke="#3b82f6" stroke-width="2.5" marker-end="url(#arrowBlue)" fill="none" class="animated-flow"/>
-            <text x="240" y="230" fill="#60a5fa" font-size="10">[2] Login / Biometric Auth</text>
-            
-            <!-- 3. Traceback store -->
-            <path d="M580,160 L610,860" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen)" fill="none" stroke-dasharray="8 4"/>
-            <text x="590" y="500" fill="#34d399" font-size="10">Persist binding</text>
-            
-            <!-- 4. Two-Point request from worker -->
-            <path d="M230,240 L330,310" stroke="#facc15" stroke-width="2.5" marker-end="url(#arrowGold)" fill="none" class="animated-flow"/>
-            <text x="250" y="285" fill="#facc15" font-size="10">[3] Two-Point request (A→B)</text>
-            
-            <!-- 5. Two-Point -> Escrow (feasibility) -->
-            <path d="M580,320 L670,320" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrowGold)" fill="none"/>
-            <text x="610" y="310" fill="#fde047" font-size="10">Route feasible</text>
-            
-            <!-- 6. Escrow hold -> PostgreSQL Ledger -->
-            <path d="M805,320 L870,860" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrowGold)" fill="none" stroke-dasharray="7 3"/>
-            <text x="830" y="580" fill="#f97316" font-size="10">Reserve funds</text>
-            
-            <!-- 7. GPS check-in from worker to Auto Check-In -->
-            <path d="M230,270 L330,470" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#arrowBlue)" fill="none" class="animated-flow"/>
-            <text x="245" y="370" fill="#7aaef0" font-size="10">[4] Live GPS stream</text>
-            
-            <!-- 8. Auto Check-In -> Arrival trigger -> Escrow -->
-            <path d="M580,480 L670,460" stroke="#2dd4bf" stroke-width="2.5" marker-end="url(#arrowGreen)" fill="none"/>
-            <text x="610" y="465" fill="#5eead4" font-size="10">Arrival signal</text>
-            
-            <!-- 9. Biometric Handshake from Worker Phone -->
-            <path d="M230,310 L330,470" stroke="#e879f9" stroke-width="2.5" marker-end="url(#arrowPurple)" fill="none" class="animated-flow"/>
-            <text x="260" y="410" fill="#d8b4fe" font-size="10">[5] Fingerprint/Face</text>
-            
-            <!-- 10. Biometric -> Escrow final release -->
-            <path d="M805,490 L680,490 L680,365" stroke="#c084fc" stroke-width="2.5" marker-end="url(#arrowPurple)" fill="none"/>
-            <text x="740" y="475" fill="#c084fc" font-size="10">Release payment</text>
-            
-            <!-- 11. Escrow -> External Bank on-ramp/off-ramp -->
-            <path d="M930,320 L1350,480" stroke="#facc15" stroke-width="2.5" marker-end="url(#arrowGold)" fill="none" stroke-dasharray="6 4"/>
-            <text x="1120" y="390" fill="#fbbf24" font-size="10">Deposit/Withdraw fiat</text>
-            
-            <!-- 12. Supervisor monitoring request -->
-            <path d="M230,640 L330,580" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrowGreen)" fill="none" class="animated-flow"/>
-            <text x="250" y="605" fill="#34d399" font-size="10">[6] Live worker status</text>
-            
-            <!-- 13. RBAC account creation (CEO) -->
-            <path d="M230,430 L670,160" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrowBlue)" fill="none"/>
-            <text x="400" y="280" fill="#fb923c" font-size="10">Create Admin/Supervisor</text>
-            
-            <!-- 14. QR Mirror flow (Laptop) -->
-            <path d="M230,430 L1010,470" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowBlue)" fill="none" stroke-dasharray="5 3"/>
-            <text x="580" y="445" fill="#9ca3af" font-size="10">QR auth token</text>
-            
-            <!-- 15. Gold Logs (MongoDB) -> TechGeoAI -->
-            <path d="M1100,360 L1100,860" stroke="#c084fc" stroke-width="2.5" marker-end="url(#arrowPurple)" fill="none" class="animated-flow"/>
-            <text x="1120" y="600" fill="#c4b5fd" font-size="10">Gold Logs extraction</text>
-            
-            <!-- 16. Activity Noter (context to MongoDB) -->
-            <path d="M580,280 L580,550 L900,550 L950,860" stroke="#2dd4bf" stroke-width="2" marker-end="url(#arrowGreen)" fill="none" stroke-dasharray="6 3"/>
-            <text x="720" y="545" fill="#5eead4" font-size="10">User Intent / Context logs</text>
-            
-            <!-- 17. Fraud Engine alerts to Supervisor & Identity -->
-            <path d="M1020,650 L800,650 L800,640 L590,640" stroke="#ef4444" stroke-width="2.5" marker-end="url(#arrowBlue)" fill="none"/>
-            <text x="800" y="625" fill="#f87171" font-size="10">Fraud alerts</path>
-            <path d="M1020,620 L1020,500" stroke="#ef4444" stroke-width="2" marker-end="url(#arrowBlue)" fill="none" stroke-dasharray="4 2"/>
-            
-            <!-- 18. TechGeoAI -> Two-Point (future native) -->
-            <path d="M1020,360 L940,360 L590,360" stroke="#c084fc" stroke-width="2" marker-end="url(#arrowPurple)" fill="none" stroke-dasharray="8 4"/>
-            <text x="800" y="350" fill="#d8b4fe" font-size="10">AI-native routing (evolution)</text>
-            
-            <!-- 19. File transfer: Shadow training dataset -->
-            <path d="M1100,880 L1100,920 L550,920 L550,890" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrowGold)" fill="none" stroke-dasharray="4 4"/>
-            <text x="800" y="935" fill="#fdba74" font-size="10">📁 File Transfer: Gold Logs → Training Pipeline</text>
-            
-            <!-- 20. PostgreSQL -> RBAC sync -->
-            <path d="M740,860 L680,205" stroke="#38bdf8" stroke-width="2" marker-end="url(#arrowBlue)" fill="none"/>
-            
-            <!-- Additional user request: "AI Chat / Natural Language" -->
-            <path d="M230,350 L330,340 L590,340" stroke="#c084fc" stroke-width="2" marker-end="url(#arrowPurple)" fill="none" class="animated-flow"/>
-            <text x="370" y="335" fill="#d8b4fe" font-size="10">[7] AI natural language request</text>
-            
-            <!-- settlement atomic to bank -->
-            <path d="M805,320 L1200,320 L1350,440" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowGreen)" fill="none"/>
-            <text x="1100" y="310" fill="#34d399" font-size="10">Settlement executed</text>
-            
-            <!-- internal ledger update post-settlement -->
-            <path d="M870,860 L805,400" stroke="#34d399" stroke-width="2" marker-end="url(#arrowGreen)" fill="none" stroke-dasharray="5 3"/>
-        </svg>`;
-    }
+            if(!time) return;
 
-    function buildUserRequestsFocus() {
-        // focus only on detailed user request flows, but still show entities/processes lightly
-        return `<svg viewBox="0 0 1600 1080" xmlns="http://www.w3.org/2000/svg">
-            <rect width="1600" height="1080" fill="#01050f" rx="28" stroke="#3b82f6" stroke-width="1.5"/>
-            <text x="800" y="45" text-anchor="middle" fill="#facc15" font-size="20" font-weight="bold">📨 DETAILED USER REQUESTS FLOW (Login · Register · Two-Point · AI · Settlement)</text>
-            <!-- replicate core entities + highlight numbered user actions -->
-            <g transform="translate(40,150)"><rect width="190" height="90" rx="16" fill="#0f172a" stroke="#3b82f6"/><text x="95" y="35" text-anchor="middle" fill="white">👤 Worker</text><text x="95" y="60" text-anchor="middle" fill="#93c5fd">Device + Bio</text></g>
-            <g transform="translate(40,400)"><rect width="190" height="90" rx="16" fill="#0f172a" stroke="#f97316"/><text x="95" y="35" text-anchor="middle" fill="white">💻 CEO/Laptop</text><text x="95" y="60" text-anchor="middle" fill="#fdba74">QR Mirror</text></g>
-            <g transform="translate(1300,480)"><rect width="180" height="80" rx="16" fill="#0f172a" stroke="#facc15"/><text x="90" y="35" text-anchor="middle" fill="white">🏦 M-Pesa</text></g>
-            <!-- processes -->
-            <g transform="translate(380,120)"><rect width="200" height="70" rx="14" fill="#1e3a8a"/><text x="100" y="35" text-anchor="middle" fill="white">Identity</text></g>
-            <g transform="translate(680,120)"><rect width="200" height="70" rx="14" fill="#0f766e"/><text x="100" y="35" text-anchor="middle" fill="white">RBAC</text></g>
-            <g transform="translate(380,280)"><rect width="200" height="70" rx="14" fill="#c2410c"/><text x="100" y="35" text-anchor="middle" fill="white">Escrow</text></g>
-            <g transform="translate(680,440)"><rect width="200" height="70" rx="14" fill="#a21caf"/><text x="100" y="35" text-anchor="middle" fill="white">Biometric</text></g>
-            <g transform="translate(1000,260)"><rect width="240" height="80" rx="20" fill="#4c1d95"/><text x="120" y="35" text-anchor="middle" fill="white">TechGeoAI</text></g>
-            <!-- numbered request arrows -->
-            <path d="M230,180 L370,155" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowBlue)" class="animated-flow"/><text x="280" y="160" fill="#3b82f6" font-weight="bold">① Register</text>
-            <path d="M230,210 L370,200" stroke="#3b82f6" stroke-width="3" marker-end="url(#arrowBlue)" class="animated-flow"/><text x="280" y="225" fill="#3b82f6" font-weight="bold">② Login</text>
-            <path d="M230,260 L370,310" stroke="#facc15" stroke-width="3" marker-end="url(#arrowGold)" class="animated-flow"/><text x="280" y="295" fill="#facc15" font-weight="bold">③ Two-Point A→B</text>
-            <path d="M230,320 L370,460" stroke="#c084fc" stroke-width="3" marker-end="url(#arrowPurple)" class="animated-flow"/><text x="270" y="400" fill="#c084fc" font-weight="bold">④ AI Chat / Routing</text>
-            <path d="M230,360 L370,470" stroke="#e879f9" stroke-width="3" marker-end="url(#arrowPurple)" class="animated-flow"/><text x="260" y="440" fill="#e879f9" font-weight="bold">⑤ Biometric Handshake</text>
-            <path d="M230,440 L680,490" stroke="#f97316" stroke-width="2.5" marker-end="url(#arrowGold)" fill="none"/><text x="400" y="485" fill="#f97316" font-weight="bold">⑥ QR Mirror Request</text>
-            <path d="M580,320 L680,320" stroke="#34d399" stroke-width="3" marker-end="url(#arrowGreen)"/><text x="610" y="310" fill="#34d399">✅ Settlement Release</text>
-            <text x="800" y="850" fill="#facc15" font-size="18" font-weight="bold">🔁 All user requests flow through Identity → Two-Point → Escrow → Biometric → Settlement</text>
-        </svg>`;
-    }
+            alarms.push({
+                id: Date.now(),
+                time: time,
+                freq: freq,
+                sound: sound,
+                active: true,
+                lastTriggered: null
+            });
+            
+            saveAndRender();
+        }
 
-    function buildStorageFileTransferFocus() {
-        return `<svg viewBox="0 0 1600 1080" xmlns="http://www.w3.org/2000/svg">
-            <rect width="1600" height="1080" fill="#020617" rx="28" stroke="#2dd4bf" stroke-width="2"/>
-            <text x="800" y="45" text-anchor="middle" fill="#34d399" font-size="20" font-weight="bold">🗄️ DATA STORES & FILE TRANSFERS (PostgreSQL · MongoDB · Gold Logs Pipeline)</text>
-            <g transform="translate(300, 200)"><rect width="340" height="130" rx="24" fill="#0f172f" stroke="#38bdf8" stroke-width="3"/><text x="170" y="40" text-anchor="middle" fill="white" font-size="18">🗄️ PostgreSQL</text><text x="170" y="70" text-anchor="middle" fill="#bae6fd">Ledger · Escrow holds · Traceback</text><text x="170" y="95" text-anchor="middle" fill="#9ca3af">RBAC roles + atomic settlement</text></g>
-            <g transform="translate(800, 200)"><rect width="340" height="130" rx="24" fill="#0f172f" stroke="#2dd4bf" stroke-width="3"/><text x="170" y="40" text-anchor="middle" fill="white" font-size="18">📦 MongoDB</text><text x="170" y="70" text-anchor="middle" fill="#ccfbf1">Gold Logs · User Intent</text><text x="170" y="95" text-anchor="middle" fill="#9ca3af">Activity Noter + Shadow context</text></g>
-            <g transform="translate(550, 520)"><rect width="380" height="110" rx="26" fill="#4c1d95" stroke="#c084fc" stroke-width="2.5"/><text x="190" y="40" text-anchor="middle" fill="white" font-size="18">📁 File Transfer Pipeline</text><text x="190" y="68" text-anchor="middle" fill="#ddd6fe">Gold Logs Extraction → Training Folder</text><text x="190" y="90" text-anchor="middle" fill="#c4b5fd">LoRA fine-tuning on RTX 5090 (nightly)</text></g>
-            <path d="M970,330 L970,510" stroke="#c084fc" stroke-width="3.5" marker-end="url(#arrowPurple)" fill="none" class="animated-flow"/><text x="990" y="420" fill="#d8b4fe" font-size="14">Gold Logs transfer</text>
-            <path d="M640,330 L640,510" stroke="#34d399" stroke-width="3" marker-end="url(#arrowGreen)" fill="none"/><text x="660" y="420" fill="#34d399" font-size="14">Escrow state sync</text>
-            <path d="M550,630 L800,760 L1050,630" stroke="#f97316" stroke-width="3" marker-end="url(#arrowGold)" fill="none" stroke-dasharray="10 4"/><text x="800" y="720" fill="#fdba74" font-size="14">Model checkpoint files (Shadow Student)</text>
-        </svg>`;
-    }
+        function toggleAlarm(id) {
+            alarms = alarms.map(a => a.id === id ? {...a, active: !a.active} : a);
+            saveAndRender();
+        }
 
-    const svgContainer = document.getElementById('svgContainer');
-    let currentView = 'full';
+        function deleteAlarm(id) {
+            alarms = alarms.filter(a => a.id !== id);
+            saveAndRender();
+        }
 
-    function renderView(view) {
-        if (view === 'full') svgContainer.innerHTML = buildFullMasterDFD();
-        else if (view === 'requests') svgContainer.innerHTML = buildUserRequestsFocus();
-        else svgContainer.innerHTML = buildStorageFileTransferFocus();
-        // re-apply animated class
-        const animatedPaths = svgContainer.querySelectorAll('.animated-flow');
-        animatedPaths.forEach(p => p.style.animation = 'flowDash 0.55s linear infinite');
-    }
+        function saveAndRender() {
+            localStorage.setItem('linux_alarms', JSON.stringify(alarms));
+            const list = document.getElementById('alarm-list');
+            list.innerHTML = '<h3>Active Alarms</h3>';
+            
+            alarms.forEach(alarm => {
+                const div = document.createElement('div');
+                div.className = `alarm-item ${!alarm.active ? 'inactive' : ''}`;
+                div.innerHTML = `
+                    <div>
+                        <strong>${alarm.time}</strong> (${alarm.freq})
+                        <div class="days-row">${alarm.sound.substring(0,30)}...</div>
+                    </div>
+                    <div>
+                        <button onclick="toggleAlarm(${alarm.id})">${alarm.active ? 'Disable' : 'Enable'}</button>
+                        <button class="delete-btn" onclick="deleteAlarm(${alarm.id})">X</button>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
 
-    document.querySelectorAll('.ctrl-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const view = btn.getAttribute('data-view');
-            if (!view) return;
-            document.querySelectorAll('.ctrl-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentView = view;
-            renderView(currentView);
-        });
-    });
-    renderView('full');
-</script>
+        function checkAlarms() {
+            const now = new Date();
+            const currentTime = now.toTimeString().substring(0, 5); // HH:MM
+            const day = now.getDay(); // 0=Sun, 1=Mon...
+            const todayStr = now.toDateString();
+
+            document.getElementById('current-time').innerText = now.toLocaleTimeString();
+
+            alarms.forEach(alarm => {
+                if (!alarm.active || alarm.lastTriggered === todayStr) return;
+
+                if (alarm.time === currentTime) {
+                    let shouldTrigger = false;
+                    
+                    if (alarm.freq === 'once') {
+                        shouldTrigger = true;
+                        alarm.active = false; // Disable after one use
+                    } else if (alarm.freq === 'daily') {
+                        shouldTrigger = true;
+                    } else if (alarm.freq === 'weekdays' && day >= 1 && day <= 5) {
+                        shouldTrigger = true;
+                    }
+
+                    if (shouldTrigger) {
+                        triggerAlarm(alarm);
+                        alarm.lastTriggered = todayStr;
+                    }
+                }
+            });
+        }
+
+        function triggerAlarm(alarm) {
+            audio.src = alarm.sound;
+            audio.play();
+            document.getElementById('stop-btn').style.display = 'block';
+            document.body.style.background = '#b33939';
+        }
+
+        function stopAlarm() {
+            audio.pause();
+            audio.currentTime = 0;
+            document.getElementById('stop-btn').style.display = 'none';
+            document.body.style.background = '#121212';
+            saveAndRender();
+        }
+
+        setInterval(checkAlarms, 1000);
+        saveAndRender();
+    </script>
 </body>
 </html>
